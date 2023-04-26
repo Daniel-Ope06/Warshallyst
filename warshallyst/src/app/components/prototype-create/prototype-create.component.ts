@@ -47,4 +47,9 @@ export class PrototypeCreateComponent {
     }
   ];
 
+
+  analyzeGraph(): void{
+
+  }
+
 }

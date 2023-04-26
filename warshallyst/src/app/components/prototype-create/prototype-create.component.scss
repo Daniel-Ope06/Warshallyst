@@ -1,0 +1,49 @@
+$brand-black: #202020;
+$brand-gray: #474747;
+$brand-white: #F8F8F8;
+$brand-blue: #1EA6E2;
+
+$brand-font: 'Inconsolata';
+
+#page-body {
+    height: 100vh;
+    overflow: hidden;
+    background-color: $brand-gray;
+
+    #page-content {
+        width: 80%;
+        margin-left: 10%;
+        //background-color: $brand-black;
+
+        #page-header {
+            #logo {
+                transform: scale(0.23);
+                transform-origin: top left;
+            }
+
+            #analyze-btn {
+                position: fixed;
+                right: 10%;
+                top: 1.875rem;
+
+                color: $brand-white;
+                font-size: 2.25rem;
+                font-weight: 400;
+                font-family: $brand-font;
+
+                border: none;
+                height: 4.313rem;
+                border-radius: 10px;
+                background-color: $brand-black;
+
+                cursor: pointer;
+                transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+
+                &:hover {
+                    color: $brand-black;
+                    background-color: $brand-blue;
+                }
+            }
+        }
+    }
+}
