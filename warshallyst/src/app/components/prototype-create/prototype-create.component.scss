@@ -27,23 +27,8 @@ $brand-font: 'Inconsolata';
                 right: 10%;
                 top: 1.875rem;
 
-                color: $brand-white;
                 font-size: 2.25rem;
                 font-weight: 400;
-                font-family: $brand-font;
-
-                border: none;
-                padding: 10px;
-                border-radius: 10px;
-                background-color: $brand-black;
-
-                cursor: pointer;
-                transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-
-                &:hover {
-                    color: $brand-black;
-                    background-color: $brand-blue;
-                }
             }
         }
 
@@ -57,6 +42,120 @@ $brand-font: 'Inconsolata';
             border-radius: 5px;
             background-color: $brand-dark-gray;
             box-shadow: 0px 14px 3px rgba(32, 32, 32, 0.3);
+
+            display: grid;
+            grid-template-columns: 4.25% 25% 40% 31%;
+            grid-template-areas:
+                "hide-btn create-node create-link samples";
+
+            #hide-panel-btn {
+                display: grid;
+                grid-template-rows: 20% 80%;
+                height: 200px;
+
+                border: none;
+                color: $brand-blue;
+                background-color: $brand-black;
+                border-radius: 5px 0px 0px 5px;
+
+                &:hover {
+                    color: $brand-black;
+                    background-color: $brand-blue;
+                    svg path {fill: $brand-black;}
+                }
+
+                svg {margin-top: 5px;}
+
+                span {
+                    margin-top: 100%;
+                    white-space: nowrap;
+                    transform: rotate(-90deg);
+                    transform-origin: top left;
+
+                    font-size: 1.8rem;
+                    font-weight: 400;
+                    font-family: $brand-font;
+                }
+            }
+
+            #create-node {
+                border-right: 3px solid $brand-black;
+                h1 {margin-bottom: 20px;}
+            }
+
+            #create-link {
+
+                border-right: 3px solid $brand-black;
+
+                #create-link-btn {
+                    border: none;
+                    border-radius: 5px;
+                    margin: 16px 0 10px 110px;
+                }
+
+                .link-btn {
+                    span {
+                        color: $brand-white;
+                        font-weight: 500;
+                        font-size: 2rem;
+                        font-family: $brand-font;
+                    }
+                }
+            }
+
+            #samples {
+
+            }
         }
+    }
+}
+
+
+.section-header {
+    color: $brand-white;
+    font-size: 2.5rem;
+    font-weight: 500;
+    font-family: $brand-font;
+    text-align: center;
+}
+
+.button-row {
+    display: grid;
+    grid-gap: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(75px, 75px));
+    justify-content: center;
+
+    button {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+
+        svg {
+          display: block;
+          cursor: pointer;
+
+          &:hover {
+            circle {fill: $brand-blue;}
+            path {fill: $brand-black;}
+          }
+        }
+    }
+}
+
+.button-fade {
+    color: $brand-white;
+    font-family: $brand-font;
+
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: $brand-black;
+
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+
+    &:hover {
+        color: $brand-black;
+        background-color: $brand-blue;
     }
 }
