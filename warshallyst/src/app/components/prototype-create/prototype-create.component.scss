@@ -3,8 +3,10 @@ $brand-dark-gray: #323232;
 $brand-light-gray: #474747;
 $brand-white: #F8F8F8;
 $brand-blue: #1EA6E2;
+$brand-green: #4DDCA2;
 
 $brand-font: 'Inconsolata';
+$transition-time: 0.3s;
 
 #page-body {
     height: 100vh;
@@ -14,11 +16,10 @@ $brand-font: 'Inconsolata';
     #page-content {
         width: 80%;
         margin-left: 10%;
-        //background-color: $brand-black;
 
         #page-header {
             #logo {
-                transform: scale(0.23);
+                transform: scale(0.2);
                 transform-origin: top left;
             }
 
@@ -33,6 +34,32 @@ $brand-font: 'Inconsolata';
         }
 
 
+        #graph-display {
+            position: absolute;
+            top: 120px;
+            left: 10%;
+            z-index: 9999;
+
+            border: none;
+            border-radius: 10px;
+            background-color: $brand-black;
+
+            .node-label {
+                font-size: 2rem;
+                font-weight: bold;
+                font-family: $brand-font;
+                text-anchor: middle;
+            }
+
+            .edge-label {
+                font-size: 1.5rem;
+                font-weight: 900;
+                font-family: $brand-font;
+            }
+        }
+
+
+
         #control-panel {
             position: fixed;
             bottom: 32px;
@@ -42,11 +69,10 @@ $brand-font: 'Inconsolata';
             border-radius: 5px;
             background-color: $brand-dark-gray;
             box-shadow: 0px 14px 3px rgba(32, 32, 32, 0.3);
+            transition: all $transition-time ease-in-out;
 
             display: grid;
             grid-template-columns: 4.25% 25% 40% 31%;
-            grid-template-areas:
-                "hide-btn create-node create-link samples";
 
             #hide-panel-btn {
                 display: grid;
@@ -155,4 +181,14 @@ $brand-font: 'Inconsolata';
         color: $brand-black;
         background-color: $brand-blue;
     }
+}
+
+.hide-section {display: none;}
+
+.hide-panel {
+    transform: translateX(-50px);
+    background-color: transparent !important;
+    box-shadow: none !important;
+    #hide-panel-btn {border-radius: 5px !important;}
+    transition: all $transition-time ease-in-out;
 }

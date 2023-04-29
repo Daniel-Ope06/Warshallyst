@@ -5,16 +5,74 @@
             <button (click)="analyzeGraph()" class="button-fade" id="analyze-btn" type="button">Analyze</button>
         </div>
 
-        <div id="control-panel">
-            <button id="hide-panel-btn" type="button">
+
+        <ngx-graph
+        id="graph-display"
+        class="graph-container"
+        [view]="view"
+        [links]="links"
+        [nodes]="nodes"
+        layout="dagre"
+        [autoZoom]="true"
+        [autoCenter]="true"
+        [showMiniMap]="true"
+        [draggingEnabled]="false"
+        [miniMapPosition]="miniMapPosition"
+        >
+
+
+            <!-- Node Template -->
+            <ng-template #nodeTemplate let-node>
+                <svg:g class="node">
+                    <svg:circle
+                        [attr.r]="35"
+                        [attr.cx]="node.dimension.width / 2"
+                        [attr.cy]="node.dimension.height / 2"
+                        [attr.fill]="node.label.includes('W') ? '#1EA6E2' : '#F8F8F8'"
+                    />
+                    <svg:text
+                        class="node-label"
+                        [attr.x]="node.dimension.width / 2"
+                        [attr.y]="node.dimension.height / 2"
+                        [attr.fill]="node.label.includes('W') ? '#F8F8F8' : '#202020'"
+                        alignment-baseline="central"
+                    >
+                        {{node.label}}
+                    </svg:text>
+                </svg:g>
+            </ng-template>
+
+
+            <!-- Link Template -->
+            <ng-template #linkTemplate let-link>
+                <svg:g class="edge">
+                  <defs>
+                    <marker id="marker" viewBox="0 0 10 10" refX="15" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 0 L 10 5 L 0 10 z" stroke="#4DDCA2" fill="#4DDCA2"></path>
+                    </marker>
+                  </defs>
+                  <svg:path class="line" stroke-width="2" stroke-dasharray="5, 5" marker-end="url(#marker)" [attr.stroke]="'#4DDCA2'"></svg:path>
+                  <svg:text class="edge-label" text-anchor="middle">
+                    <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline" startOffset="50%" fill="#4DDCA2">
+                      {{link.label}}
+                    </textPath>
+                  </svg:text>
+                </svg:g>
+            </ng-template>
+
+        </ngx-graph>
+
+
+        <div id="control-panel" [ngClass]="{'hide-panel': isPanelHidden}">
+            <button id="hide-panel-btn" type="button" (click)="togglePanel()">
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M9.29291 3.29291C9.68343 2.90236 10.3166 2.90236 10.7071 3.29291L22.7072 15.2929C23.0976 15.6834 23.0976 16.3166 22.7072 16.7071L10.7071 28.7072C10.3166 29.0976 9.68343 29.0976 9.29291 28.7072C8.90236 28.3166 8.90236 27.6834 9.29291 27.2928L20.5858 16L9.29291 4.7071C8.90236 4.31658 8.90236 3.68343 9.29291 3.29291Z" fill="#1EA6E2"/>
                 </svg>
-                <span>Hide panel</span>
+                <span>{{ isPanelHidden ? 'Show panel' : 'Hide panel' }}</span>
             </button>
 
 
-            <div id="create-node">
+            <div id="create-node" [ngClass]="{'hide-section': isPanelHidden}">
                 <h1 class="section-header">Create node</h1>
                 <div class="button-row">
                     <button title="create warehouse" type="button">
@@ -44,7 +102,7 @@
             </div>
 
 
-            <div id="create-link">
+            <div id="create-link" [ngClass]="{'hide-section': isPanelHidden}">
                 <button class="section-header button-fade" id="create-link-btn" type="button">Create link</button>
 
                 <div class="button-row">
@@ -82,7 +140,7 @@
                 </div>
             </div>
 
-            <div id="samples">
+            <div id="samples" [ngClass]="{'hide-section': isPanelHidden}">
                 <h1 class="section-header">Samples</h1>
             </div>
         </div>

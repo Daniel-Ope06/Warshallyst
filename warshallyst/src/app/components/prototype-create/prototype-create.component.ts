@@ -6,13 +6,37 @@ import { Layout, Edge, Node, MiniMapPosition } from '@swimlane/ngx-graph';
   templateUrl: './prototype-create.component.html',
   styleUrls: ['./prototype-create.component.scss']
 })
+
 export class PrototypeCreateComponent {
 
-  view: [number, number] = [1124, 600];
+  // graph view
+  isMinView: boolean = true;
+  minView: [number, number] = [0.8 * window.innerWidth, 0.52 * window.innerHeight];
+  maxView: [number, number] = [0.8 * window.innerWidth, 0.8 * window.innerHeight];
+
+  view: [number, number] = this.isMinView? this.minView : this.maxView;
   miniMapPosition:MiniMapPosition = MiniMapPosition.UpperLeft;
 
-  nodes: Node[] = [
-    {
+  // hide-panel-btn
+  isPanelHidden: boolean = false;
+  togglePanel(): void {
+    this.isPanelHidden = !this.isPanelHidden;
+    this.isMinView = !this.isMinView;
+
+    if (this.isPanelHidden) {
+      setTimeout(() => {
+        // Code for hiding/showing panel with animation
+        this.view = this.isMinView ? this.minView : this.maxView;
+      }, 300);
+    } else {
+      this.view = this.isMinView ? this.minView : this.maxView;
+    }
+  }
+
+
+
+
+  nodes: Node[] = [    {
       id: 'node_1',
       label: 'W1'
     }, {
@@ -32,7 +56,7 @@ export class PrototypeCreateComponent {
     {
       id: 'link_1',
       source: 'node_1',
-    target: 'node_2',
+      target: 'node_2',
       label: '10'
     }, {
       id: 'link_2',
@@ -48,8 +72,13 @@ export class PrototypeCreateComponent {
   ];
 
 
+
+
+
   analyzeGraph(): void{
 
   }
+
+
 
 }
