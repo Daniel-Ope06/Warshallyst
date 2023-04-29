@@ -33,12 +33,11 @@ $transition-time: 0.3s;
             }
         }
 
-
         #graph-display {
             position: absolute;
             top: 120px;
             left: 10%;
-            z-index: 9999;
+            z-index: 9998;
 
             border: none;
             border-radius: 10px;
@@ -83,6 +82,7 @@ $transition-time: 0.3s;
                 color: $brand-blue;
                 background-color: $brand-black;
                 border-radius: 5px 0px 0px 5px;
+                cursor: pointer;
 
                 &:hover {
                     color: $brand-black;
@@ -191,4 +191,64 @@ $transition-time: 0.3s;
     box-shadow: none !important;
     #hide-panel-btn {border-radius: 5px !important;}
     transition: all $transition-time ease-in-out;
+}
+
+.dialog-box {
+    z-index: 9999;
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -35%);
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 10px;
+    border: 5px solid $brand-black;
+    background: $brand-dark-gray;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    text-align: center;
+    margin-top: 5%;
+    margin-left: 5%;
+    max-height: 90%;
+    overflow: auto;
+}
+
+.node-option {
+    cursor: pointer;
+    text {
+        font-size: 2.25rem;
+        font-weight: 900;
+        font-family: $brand-font;
+    }
+
+    &:hover {
+        circle {fill: $brand-blue;}
+        text {fill: $brand-black;}
+    }
+}
+
+.number-dialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    input {
+      margin-bottom: 10px;
+      width: 25%;
+      font-size: 2rem;
+      font-family: $brand-font;
+    }
+
+    button {
+      margin-top: 10px;
+      font-size: 1.5rem;
+      font-family: $brand-font;
+    }
 }

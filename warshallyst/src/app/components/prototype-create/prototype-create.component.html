@@ -1,5 +1,23 @@
 <div id="page-body">
     <main id="page-content">
+
+        <!-- Node Dialogue Box -->
+        <div *ngIf="showDialog" class="dialog-box">
+            <div class="grid-container">
+                <svg *ngFor="let node of nodes" (click)="selectNode(node)" class="node-option" width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="37.5" cy="37.5" r="37.5" fill="#202020"/>
+                    <text x="37.5" y="50" text-anchor="middle" fill="#F8F8F8">{{ node.label }}</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Number Dialogue Box -->
+        <form *ngIf="showNumberDialog" (ngSubmit)="setTime()" class="dialog-box number-dialog">
+            <input type="number" id="time" name="time" aria-label="time" min="0" max="999" class="form-control" [(ngModel)]="travelTime">
+            <button type="submit" class="button-fade">Set time</button>
+        </form>
+
+
         <div id="page-header">
             <img id="logo" src="assets/images/logo-no-background.png" aria-label="Logo">
             <button (click)="analyzeGraph()" class="button-fade" id="analyze-btn" type="button">Analyze</button>
@@ -75,7 +93,7 @@
             <div id="create-node" [ngClass]="{'hide-section': isPanelHidden}">
                 <h1 class="section-header">Create node</h1>
                 <div class="button-row">
-                    <button title="create warehouse" type="button">
+                    <button title="create warehouse" type="button" (click)="createWarehouse()">
                         <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="37.5" cy="37.5" r="37.5" fill="#202020"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M50.1562 60C55.5928 60 60 55.5928 60 50.1562C60 44.7197 55.5928 40.3125 50.1562 40.3125C44.7197 40.3125 40.3125 44.7197 40.3125 50.1562C40.3125 55.5928 44.7197 60 50.1562 60ZM51.5625 45.9375C51.5625 45.161 50.9328 44.5312 50.1562 44.5312C49.3797 44.5312 48.75 45.161 48.75 45.9375V48.75H45.9375C45.161 48.75 44.5312 49.3797 44.5312 50.1562C44.5312 50.9328 45.161 51.5625 45.9375 51.5625H48.75V54.375C48.75 55.1515 49.3797 55.7812 50.1562 55.7812C50.9328 55.7812 51.5625 55.1515 51.5625 54.375V51.5625H54.375C55.1515 51.5625 55.7812 50.9328 55.7812 50.1562C55.7812 49.3797 55.1515 48.75 54.375 48.75H51.5625V45.9375Z" fill="#1EA6E2"/>
@@ -91,7 +109,7 @@
                         </svg>
                     </button>
 
-                    <button title="create customer" type="button">
+                    <button title="create customer" type="button" (click)="createCustomer()">
                         <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="37.5" cy="37.5" r="37.5" fill="#202020"/>
                             <path d="M39.4887 19.2189C38.3904 18.1205 36.6096 18.1205 35.5113 19.2189L16.8181 37.912C16.269 38.4612 16.269 39.3516 16.8181 39.9007C17.3673 40.4499 18.2577 40.4499 18.8069 39.9007L20.625 38.0826V52.9687C20.625 55.2989 22.5138 57.1875 24.8437 57.1875H36.0938C36.8704 57.1875 37.5 56.5581 37.5 55.7812C37.5 55.0047 36.8704 54.375 36.0938 54.375H24.8437C24.0671 54.375 23.4375 53.7456 23.4375 52.9687V35.2701L37.5 21.2076L56.193 39.9007C56.7423 40.4499 57.6327 40.4499 58.182 39.9007C58.731 39.3516 58.731 38.4612 58.182 37.912L51.5625 31.2926V22.0314C51.5625 21.2547 50.9328 20.6251 50.1562 20.6251H47.3438C46.5672 20.6251 45.9375 21.2547 45.9375 22.0314V25.6676L39.4887 19.2189Z" fill="#F8F8F8"/>
@@ -103,27 +121,39 @@
 
 
             <div id="create-link" [ngClass]="{'hide-section': isPanelHidden}">
-                <button class="section-header button-fade" id="create-link-btn" type="button">Create link</button>
+                <button class="section-header button-fade" id="create-link-btn" type="button" (click)="createLink()">Create link</button>
 
                 <div class="button-row">
-                    <button title="source node" type="button" class="link-btn">
-                        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <button title="source node" type="button" class="link-btn" (click)="selectFrom()">
+                        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg" *ngIf="!sourceSelected">
                             <circle cx="37.5" cy="37.5" r="37.5" fill="#202020"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M26.25 26.25C26.25 20.0368 31.2868 15 37.5 15C43.7131 15 48.75 20.0368 48.75 26.25C48.75 31.987 44.4559 36.7209 38.9062 37.413V52.9688C38.9062 53.7453 38.2766 54.375 37.5 54.375C36.7234 54.375 36.0938 53.7453 36.0938 52.9688V37.413C30.5442 36.7209 26.25 31.987 26.25 26.25ZM33.2623 50.3649C33.3893 51.1313 32.871 51.8553 32.1048 51.9821C30.1039 52.3137 28.5073 52.811 27.4521 53.3667C26.9239 53.6452 26.5937 53.9059 26.4108 54.1132C26.3231 54.2124 26.2826 54.2847 26.2648 54.3255C26.2562 54.3455 26.2528 54.3584 26.2514 54.3646C26.2501 54.3705 26.25 54.375 26.25 54.375C26.25 54.375 26.2499 54.382 26.2543 54.3967C26.2591 54.4121 26.2708 54.4433 26.2993 54.4895C26.359 54.5868 26.4807 54.733 26.7088 54.9128C27.1731 55.2787 27.9321 55.6696 28.9954 56.024C31.1072 56.7279 34.1142 57.1875 37.5 57.1875C40.8859 57.1875 43.8928 56.7279 46.0047 56.024C47.0678 55.6696 47.8269 55.2787 48.2913 54.9128C48.5194 54.733 48.6409 54.5868 48.7008 54.4895C48.7292 54.4433 48.741 54.4121 48.7458 54.3967C48.75 54.3823 48.75 54.3753 48.75 54.3753C48.75 54.3753 48.75 54.3705 48.7486 54.3646C48.7472 54.3584 48.7438 54.3455 48.7351 54.3255C48.7174 54.2847 48.6769 54.2124 48.5891 54.1132C48.4063 53.9059 48.0761 53.6452 47.5479 53.3667C46.4927 52.811 44.896 52.3137 42.8952 51.9821C42.129 51.8553 41.6107 51.1313 41.7376 50.3649C41.8646 49.5988 42.5886 49.0805 43.3548 49.2076C45.5213 49.5665 47.4402 50.1309 48.8588 50.8785C50.1588 51.5633 51.5625 52.6914 51.5625 54.375C51.5625 55.5731 50.8329 56.4906 50.0322 57.1217C49.2155 57.7652 48.1211 58.2832 46.894 58.6922C44.4252 59.5151 41.104 60 37.5 60C33.896 60 30.5748 59.5151 28.106 58.6922C26.8789 58.2832 25.7845 57.7652 24.9679 57.1217C24.1672 56.4906 23.4375 55.5731 23.4375 54.375C23.4375 52.6914 24.8413 51.5633 26.1411 50.8785C27.5598 50.1309 29.4788 49.5665 31.6452 49.2076C32.4114 49.0805 33.1354 49.5988 33.2623 50.3649Z" fill="#1EA6E2"/>
                         </svg>
+
+                        <svg class="node-option" width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg" *ngIf="sourceSelected">
+                            <circle cx="37.5" cy="37.5" r="37.5" fill="#202020"/>
+                            <text x="37.5" y="50" text-anchor="middle" fill="#1EA6E2">{{ sourceNode }}</text>
+                        </svg>
+
                         <span>From</span>
                     </button>
 
-                    <button title="destination node" type="button" class="link-btn">
-                        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <button title="destination node" type="button" class="link-btn" (click)="selectTo()">
+                        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg" *ngIf="!destinationSelected">
                             <circle cx="37.5" cy="37.5" r="37.5" fill="#202020"/>
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M26.25 26.25C26.25 20.0368 31.2868 15 37.5 15C43.7131 15 48.75 20.0368 48.75 26.25C48.75 31.987 44.4559 36.7209 38.9062 37.413V52.9688C38.9062 53.7453 38.2766 54.375 37.5 54.375C36.7234 54.375 36.0938 53.7453 36.0938 52.9688V37.413C30.5442 36.7209 26.25 31.987 26.25 26.25ZM33.2623 50.3649C33.3893 51.1313 32.871 51.8553 32.1048 51.9821C30.1039 52.3137 28.5073 52.811 27.4521 53.3667C26.9239 53.6452 26.5937 53.9059 26.4108 54.1132C26.3231 54.2124 26.2826 54.2847 26.2648 54.3255C26.2562 54.3455 26.2528 54.3584 26.2514 54.3646C26.2501 54.3705 26.25 54.375 26.25 54.375C26.25 54.375 26.2499 54.382 26.2543 54.3967C26.2591 54.4121 26.2708 54.4433 26.2993 54.4895C26.359 54.5868 26.4807 54.733 26.7088 54.9128C27.1731 55.2787 27.9321 55.6696 28.9954 56.024C31.1072 56.7279 34.1142 57.1875 37.5 57.1875C40.8859 57.1875 43.8928 56.7279 46.0047 56.024C47.0678 55.6696 47.8269 55.2787 48.2913 54.9128C48.5194 54.733 48.6409 54.5868 48.7008 54.4895C48.7292 54.4433 48.741 54.4121 48.7458 54.3967C48.75 54.3823 48.75 54.3753 48.75 54.3753C48.75 54.3753 48.75 54.3705 48.7486 54.3646C48.7472 54.3584 48.7438 54.3455 48.7351 54.3255C48.7174 54.2847 48.6769 54.2124 48.5891 54.1132C48.4063 53.9059 48.0761 53.6452 47.5479 53.3667C46.4927 52.811 44.896 52.3137 42.8952 51.9821C42.129 51.8553 41.6107 51.1313 41.7376 50.3649C41.8646 49.5988 42.5886 49.0805 43.3548 49.2076C45.5213 49.5665 47.4402 50.1309 48.8588 50.8785C50.1588 51.5633 51.5625 52.6914 51.5625 54.375C51.5625 55.5731 50.8329 56.4906 50.0322 57.1217C49.2155 57.7652 48.1211 58.2832 46.894 58.6922C44.4252 59.5151 41.104 60 37.5 60C33.896 60 30.5748 59.5151 28.106 58.6922C26.8789 58.2832 25.7845 57.7652 24.9679 57.1217C24.1672 56.4906 23.4375 55.5731 23.4375 54.375C23.4375 52.6914 24.8413 51.5633 26.1411 50.8785C27.5598 50.1309 29.4788 49.5665 31.6452 49.2076C32.4114 49.0805 33.1354 49.5988 33.2623 50.3649Z" fill="#1EA6E2"/>
                         </svg>
+
+                        <svg class="node-option" width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg" *ngIf="destinationSelected">
+                            <circle cx="37.5" cy="37.5" r="37.5" fill="#202020"/>
+                            <text x="37.5" y="50" text-anchor="middle" fill="#1EA6E2">{{ destinationNode }}</text>
+                        </svg>
+
                         <span>To</span>
                     </button>
 
-                    <button title="travel time" type="button" class="link-btn">
-                        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <button title="travel time" type="button" class="link-btn" (click)="selectTime()">
+                        <svg width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg" *ngIf="!isTimeSet">
                             <circle cx="37.5" cy="37.5" r="37.5" fill="#202020"/>
                             <g clip-path="url(#clip0_49_51)">
                             <path d="M37.5 24.8438C37.5 24.0671 36.8704 23.4375 36.0938 23.4375C35.3171 23.4375 34.6875 24.0671 34.6875 24.8438V40.3125C34.6875 40.8171 34.9579 41.2831 35.3961 41.5335L45.2397 47.1584C45.9142 47.5437 46.7731 47.3094 47.1584 46.6353C47.5437 45.9608 47.3094 45.1019 46.6353 44.7166L37.5 39.4964V24.8438Z" fill="#1EA6E2"/>
@@ -135,6 +165,12 @@
                             </clipPath>
                             </defs>
                         </svg>
+
+                        <svg class="node-option" width="75" height="75" viewBox="0 0 75 75" fill="none" xmlns="http://www.w3.org/2000/svg" *ngIf="isTimeSet">
+                            <circle cx="37.5" cy="37.5" r="37.5" fill="#202020"/>
+                            <text x="37.5" y="50" text-anchor="middle" fill="#1EA6E2">{{ travelTime }}</text>
+                        </svg>
+
                         <span>Time</span>
                     </button>
                 </div>
@@ -147,20 +183,3 @@
     </main>
 </div>
 
-
-
-<!--
-<ngx-graph
-class="graph-container"
-[view]="view"
-[links]="links"
-[nodes]="nodes"
-layout="dagre"
-[autoZoom]="true"
-[autoCenter]="true"
-[showMiniMap]="true"
-[draggingEnabled]="false"
-[miniMapPosition]="miniMapPosition"
->
-</ngx-graph>
--->
