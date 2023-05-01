@@ -64,7 +64,7 @@ $transition-time: 0.3s;
             bottom: 32px;
 
             width: 80%;
-            height: 200px;
+            height: 25.8%;//200px;
             border-radius: 5px;
             background-color: $brand-dark-gray;
             box-shadow: 0px 14px 3px rgba(32, 32, 32, 0.3);
@@ -76,7 +76,7 @@ $transition-time: 0.3s;
             #hide-panel-btn {
                 display: grid;
                 grid-template-rows: 20% 80%;
-                height: 200px;
+                height: 94%;
 
                 border: none;
                 color: $brand-blue;
@@ -107,11 +107,12 @@ $transition-time: 0.3s;
             #create-node {
                 border-right: 3px solid $brand-black;
                 h1 {margin-bottom: 20px;}
+                height: 94%;
             }
 
             #create-link {
-
                 border-right: 3px solid $brand-black;
+                height: 94%;
 
                 #create-link-btn {
                     border: none;
