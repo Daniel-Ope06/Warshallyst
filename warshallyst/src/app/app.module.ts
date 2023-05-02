@@ -7,11 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PrototypeCreateComponent } from './components/prototype-create/prototype-create.component';
+import { NotResponsiveComponent } from './components/not-responsive/not-responsive.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PrototypeCreateComponent
+    PrototypeCreateComponent,
+    NotResponsiveComponent
   ],
   imports: [
     FormsModule,
