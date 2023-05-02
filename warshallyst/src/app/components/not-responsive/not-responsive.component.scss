@@ -1,0 +1,32 @@
+$brand-white: #F8F8F8;
+$brand-blue: #1EA6E2;
+$brand-font: 'Inconsolata';
+
+#logo {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: scale(0.2) translate(-50%, -8%);
+    transform-origin: top left;
+}
+
+.message-box {
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: $brand-white;
+    border: 2px solid $brand-blue;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+
+    color: $brand-blue;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.5;
+
+    width: 80%;
+    padding: 20px;
+}
