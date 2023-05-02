@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { Layout, Edge, Node, MiniMapPosition } from '@swimlane/ngx-graph';
 
 @Component({
@@ -8,6 +10,16 @@ import { Layout, Edge, Node, MiniMapPosition } from '@swimlane/ngx-graph';
 })
 
 export class PrototypeCreateComponent {
+
+  constructor(private deviceDetector: DeviceDetectorService, private router: Router) {}
+
+  // check for device type
+  ngOnInit(): void {
+    if (this.deviceDetector.isMobile() || this.deviceDetector.isTablet()) {
+      this.router.navigate(['/not-responsive']);
+    }
+  }
+
 
   // graph view
   isMinView: boolean = true;
